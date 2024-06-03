@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(35deg, red,pink,orange,lavender, yellow, green,lavender, blue,lavender, purple,black);
+            background-size: 400% 400%;
+            animation: gradientAnimation 25s infinite;
+
+        }
+
+        h2 {
+            display: block;
+            font-size: 1.5em;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            color: white;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .cells {
+            display: grid;
+            position: center;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 20px;
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #cacccb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tic Tac Toe</h2>
+        <div class="cells">
+            <div class="cell" onclick="clicking(0)"></div>
+            <div class="cell" onclick="clicking(1)"></div>
+            <div class="cell" onclick="clicking(2)"></div>
+            <div class="cell" onclick="clicking(3)"></div>
+            <div class="cell" onclick="clicking(4)"></div>
+            <div class="cell" onclick="clicking(5)"></div>
+            <div class="cell" onclick="clicking(6)"></div>
+            <div class="cell" onclick="clicking(7)"></div>
+            <div class="cell" onclick="clicking(8)"></div>
+        </div>
+        <button onclick="reset()">Clear</button>
+    </div>
+
+    <script>
+        let player = "X";
+
+        function clicking(index) {
+            const cell = document.getElementsByClassName("cell")[index];
+            if (cell.innerHTML == "") {
+                if (player === "X") {
+                    player = "O";
+                } else {
+                    player = "X";
+                }
+                cell.innerHTML = player;
+                winning();
+            }
+        }
+
+        function winning() {
+            const cell = document.getElementsByClassName("cell");
+            const WinArray = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+
+            for (const arr of WinArray) {
+                if (
+                    cell[arr[0]].innerHTML != "" &&
+                    cell[arr[0]].innerHTML == cell[arr[1]].innerHTML &&
+                    cell[arr[1]].innerHTML == cell[arr[2]].innerHTML
+                ) {
+                    setTimeout(() => {
+                        alert("Player " + cell[arr[0]].innerHTML + " wins!.....Would you like to rematch!");
+                        reset();
+                    }, 1000);
+                }
+            }
+        }
+
+        function reset() {
+            const cell = document.getElementsByClassName("cell");
+            for (const element of cell) {
+                element.innerHTML = "";
+            }
+            player = "X";
+        }
+    </script>
+</body>
+
+</html>
